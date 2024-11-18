@@ -1,13 +1,9 @@
 filippo.io/edwards25519 v1.1.0 h1:FNf4tywRC1HmFuKW5xopWpigGjJKiJSV0Cqo0cJWDaA=
 filippo.io/edwards25519 v1.1.0/go.mod h1:BxyFTGdWcka3PhytdK4V28tE5sGfRvvvRV7EaN4VDT4=
-github.com/SanGameDev/GoWebPractice v0.0.0-20241111153852-a5b9a0d05e26 h1:iSELFlXgb+iPD5HO77fmuixdEOUyPNKj5jb6sV53pYc=
-github.com/SanGameDev/GoWebPractice v0.0.0-20241111153852-a5b9a0d05e26/go.mod h1:e7WgsNE1d/Gg4jdcMNNVnXh1gxdRx5ckLBJATJp+JBU=
 github.com/SanGameDev/go_lib_response v0.0.1 h1:0oQ6wbCpfouaFeh/YQZakzVNszLCgNUrm7JaiQwQPrU=
 github.com/SanGameDev/go_lib_response v0.0.1/go.mod h1:tGgVEddLPKc7udcVd9SmFLOeI15Dy6wOIuL/kFPDJBg=
-github.com/SanGameDev/gocourse_course v0.0.0-20241115012435-cc77be26af59 h1:f2gO9guEv7LTcSWmNdW/jIy3HwjZiG94Vz0x0M9AyC4=
-github.com/SanGameDev/gocourse_course v0.0.0-20241115012435-cc77be26af59/go.mod h1:gv5J/emUiknw26SkZIpD08pkuOa57zvSraBCEAAcH+I=
-github.com/SanGameDev/gocourse_domain v0.0.1 h1:KNcfm8G7mD1VFQG3lYFUbe0+7wMtYz7qM8MXMcjMQ2c=
-github.com/SanGameDev/gocourse_domain v0.0.1/go.mod h1:OLpf/otMsJXjS3C+fGSnaxySnxjmMFcvCXlFgBCP/kA=
+github.com/SanGameDev/gocourse_domain v0.0.2 h1:OQ9zBtRsyHPSpZ5z2VxqbqtRizs5oobNc6g3OXU1mlI=
+github.com/SanGameDev/gocourse_domain v0.0.2/go.mod h1:OLpf/otMsJXjS3C+fGSnaxySnxjmMFcvCXlFgBCP/kA=
 github.com/SanGameDev/gocourse_meta v0.0.2 h1:uSu+mYrdpmgC3/tOKai7szQZCxVAFCWOkWHOaxlZ038=
 github.com/SanGameDev/gocourse_meta v0.0.2/go.mod h1:zIVL7qvznuuGk8RSndKvTnO1pcJmtrB5F8OwcWPyOfY=
 github.com/go-kit/kit v0.13.0 h1:OoneCcHKHQ03LfBpoQCUfCluwd2Vt3ohz+kvbJneZAU=

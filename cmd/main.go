@@ -23,11 +23,16 @@ func main() {
 		l.Fatal(err)
 	}
 
+	pagLimDef := os.Getenv("PAGINATOR_LIMIT_DEFAULT")
+	if pagLimDef == "" {
+		l.Fatal("PAGINATOR_LIMIT_DEFAULT is required")
+	}
+
 	ctx := context.Background()
 	enrollRepo := enrollment.NewRepo(db, l)
 	enrollSrv := enrollment.NewService(l, enrollRepo)
 
-	h := handler.NewEnrollmentHTTPServer(ctx, enrollment.MakeEndpoints(enrollSrv))
+	h := handler.NewEnrollmentHTTPServer(ctx, enrollment.MakeEndpoints(enrollSrv, enrollment.Config{LimPageDef: pagLimDef}))
 
 	port := os.Getenv("PORT")
 	address := fmt.Sprintf("127.0.0.1:%s", port)

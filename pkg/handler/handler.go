@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/SanGameDev/go_lib_response/response"
 	"github.com/SanGameDev/gocourse_enrollment/internal/enrollment"
@@ -27,6 +28,18 @@ func NewEnrollmentHTTPServer(ctx context.Context, endpoints enrollment.Endpoints
 		opts...,
 	)).Methods("POST")
 
+	r.Handle("/enrollments", httptransport.NewServer(
+		endpoint.Endpoint(endpoints.GetAll),
+		decodeGetAllEnrollment, encodeResponse,
+		opts...,
+	)).Methods("GET")
+
+	r.Handle("/enrollments/{id}", httptransport.NewServer(
+		endpoint.Endpoint(endpoints.Update),
+		decodeUpdateEnrollment, encodeResponse,
+		opts...,
+	)).Methods("PATCH")
+
 	return r
 }
 
@@ -35,6 +48,36 @@ func decodeCreateEnrollment(_ context.Context, r *http.Request) (interface{}, er
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		return nil, response.BadRequest(fmt.Sprintf(("invalid request format: '%s'"), err.Error()))
 	}
+
+	return req, nil
+}
+
+func decodeGetAllEnrollment(_ context.Context, r *http.Request) (interface{}, error) {
+
+	v := r.URL.Query()
+
+	limit, _ := strconv.Atoi(v.Get("limit"))
+	page, _ := strconv.Atoi(v.Get("page"))
+
+	req := enrollment.GetAllReq{
+		UserID:   v.Get("user_id"),
+		CourseID: v.Get("course_id"),
+		Limit:    limit,
+		Page:     page,
+	}
+
+	return req, nil
+}
+
+func decodeUpdateEnrollment(_ context.Context, r *http.Request) (interface{}, error) {
+	var req enrollment.UpdateReq
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		return nil, response.BadRequest(fmt.Sprintf(("invalid request format: '%s'"), err.Error()))
+	}
+
+	path := mux.Vars(r)
+	req.ID = path["id"]
 
 	return req, nil
 }
