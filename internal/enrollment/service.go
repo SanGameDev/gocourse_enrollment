@@ -5,6 +5,9 @@ import (
 	"log"
 
 	"github.com/SanGameDev/gocourse_domain/domain"
+
+	courseSdk "github.com/SanGameDev/gocourse_sdk/course"
+	userSdk "github.com/SanGameDev/gocourse_sdk/user"
 )
 
 type (
@@ -20,15 +23,19 @@ type (
 		Count(ctx context.Context, filters Filters) (int, error)
 	}
 	service struct {
-		log  *log.Logger
-		repo Repository
+		log         *log.Logger
+		userTrans   userSdk.Transport
+		courseTrans courseSdk.Transport
+		repo        Repository
 	}
 )
 
-func NewService(log *log.Logger, repo Repository) Service {
+func NewService(log *log.Logger, userTrans userSdk.Transport, courseTrans courseSdk.Transport, repo Repository) Service {
 	return &service{
-		log:  log,
-		repo: repo,
+		log:         log,
+		userTrans:   userTrans,
+		courseTrans: courseTrans,
+		repo:        repo,
 	}
 }
 
@@ -37,7 +44,16 @@ func (s service) Create(ctx context.Context, userID, courseID string) (*domain.E
 	enroll := &domain.Enrollment{
 		UserID:   userID,
 		CourseID: courseID,
-		Status:   "pe",
+		Status:   "pending",
+	}
+
+	if _, err := s.userTrans.Get(userID); err != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	if _, err := s.courseTrans.Get(courseID); err != nil {
+		return nil, err
 	}
 
 	if err := s.repo.Create(ctx, enroll); err != nil {

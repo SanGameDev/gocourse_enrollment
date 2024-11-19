@@ -12,6 +12,9 @@ import (
 	"github.com/SanGameDev/gocourse_enrollment/pkg/bootstrap"
 	"github.com/SanGameDev/gocourse_enrollment/pkg/handler"
 	"github.com/joho/godotenv"
+
+	courseSdk "github.com/SanGameDev/gocourse_sdk/course"
+	userSdk "github.com/SanGameDev/gocourse_sdk/user"
 )
 
 func main() {
@@ -28,9 +31,12 @@ func main() {
 		l.Fatal("PAGINATOR_LIMIT_DEFAULT is required")
 	}
 
+	userTrans := userSdk.NewHttpClient(os.Getenv("API_USER_URL"), "")
+	courseTrans := courseSdk.NewHttpClient(os.Getenv("API_COURSE_URL"), "")
+
 	ctx := context.Background()
 	enrollRepo := enrollment.NewRepo(db, l)
-	enrollSrv := enrollment.NewService(l, enrollRepo)
+	enrollSrv := enrollment.NewService(l, userTrans, courseTrans, enrollRepo)
 
 	h := handler.NewEnrollmentHTTPServer(ctx, enrollment.MakeEndpoints(enrollSrv, enrollment.Config{LimPageDef: pagLimDef}))
 
