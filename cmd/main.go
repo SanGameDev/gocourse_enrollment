@@ -32,7 +32,7 @@ func main() {
 	}
 
 	userTrans := userSdk.NewHttpClient(os.Getenv("API_USER_URL"), "")
-	courseTrans := courseSdk.NewHttpClient(os.Getenv("API_COURSE_URL"), "")
+	courseTrans := courseSdk.NewHttpClient(os.Getenv("API_COURSE_URL"), os.Getenv("API_COURSE_TOKEN"))
 
 	ctx := context.Background()
 	enrollRepo := enrollment.NewRepo(db, l)
